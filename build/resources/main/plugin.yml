@@ -1,0 +1,15 @@
+name: TradeMC
+version: '1.0.0-SNAPSHOT'
+main: com.kyfstore.tradeMC.TradeMC
+api-version: '1.21'
+authors: [KyfStore]
+description: TradeMC is a Minecraft plugin that enables seamless player-to-player trading, server shops, and an integrated economy for buying, selling, and managing transactions.
+website: https://github.com/KyfStore11k/TradeMC
+depend:
+  - Vault
+  - LuckPerms
+commands:
+  trademc:
+    description: "Primarily Manages TradeMC Config"
+    permission: tradeMC.admin
+    permission-message: "You currently do not have the permissions to use this command!"

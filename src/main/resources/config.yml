@@ -1,0 +1,17 @@
+settings:
+  general:
+    currency_name: "Coins"
+
+trading:
+  allow-cross-world: true
+  blacklist-items:
+    - "minecraft:bedrock"
+    - "minecraft:command_block"
+
+shops:
+  enable-shops: true
+  shop-creation-cost: 100
+
+economy:
+  enable-economy: true
+  default-balance: 250
