@@ -1,0 +1,3 @@
+# CREDITS AND CONTRIBUTIONS
+- lammy12k (https://github.com/lammy12k/) ; AUTHOR OF PROJECT
+- anmvc (https://github.com/anmvc/) ; CONTRIBUTER WHO HELPED WITH CONVERTING BRIGADIER TO COMMANDAPI
