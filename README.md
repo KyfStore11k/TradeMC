@@ -13,8 +13,12 @@ TradeMC is a Minecraft plugin designed to enable seamless player-to-player tradi
 - Integrated economy for managing transactions
 
 ## Requirements
+### Hard Depend: (Required)
 - **Vault**
 - **LuckPerms**
+### Soft Depend: (Optional but Recommended)
+- **Essentials (EssentialsX
+- )**
 
 ## Commands
 - **`/trademc`**: Manages TradeMC configuration  

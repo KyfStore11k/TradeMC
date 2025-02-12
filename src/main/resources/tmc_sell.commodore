@@ -1,0 +1,7 @@
+tmc_sell {
+    minecraft_item brigadier:string single_word {
+        item_count brigadier:long {
+            sell_price brigadier:long;
+        }
+    }
+}

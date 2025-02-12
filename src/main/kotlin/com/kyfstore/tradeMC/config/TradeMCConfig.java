@@ -1,18 +1,26 @@
 package com.kyfstore.tradeMC.config;
 
 import com.kyfstore.tradeMC.TradeMC;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
+
+import net.milkbowl.vault.economy.Economy;
 
 import java.util.List;
 
 public class TradeMCConfig {
     private TradeMC globalPlugin;
     private FileConfiguration globalConfig;
+
+    private static Economy econ = null;
+
     public TradeMCConfig(@NotNull TradeMC plugin)
     {
         this.globalPlugin = plugin;
@@ -22,13 +30,48 @@ public class TradeMCConfig {
 
     private void onEnable()
     {
+        if (!setupEconomy()) {
+            globalPlugin.getLogger().severe("Vault not found! Disabling plugin...");
+            globalPlugin.getServer().getPluginManager().disablePlugin(globalPlugin);
+        }
         this.reloadConfig();
+    }
+
+    private boolean setupEconomy() {
+        if (globalPlugin.getServer().getPluginManager().getPlugin("Vault") == null) {
+            globalPlugin.getLogger().severe("Vault plugin not found! Ensure Vault is installed.");
+            return false;
+        }
+
+        RegisteredServiceProvider<Economy> rsp = globalPlugin.getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            globalPlugin.getLogger().severe("No economy provider found! Ensure an economy plugin like EssentialsX is installed.");
+            return false;
+        }
+
+        econ = rsp.getProvider();
+        globalPlugin.getLogger().info("Vault hooked successfully with economy provider: " + econ.getName());
+        return econ != null;
+    }
+
+    public void setPlayerBalance(OfflinePlayer player, double amount) {
+        if (econ != null) {
+            double currentBalance = econ.getBalance(player);
+            double difference = amount - currentBalance;
+
+            if (difference > 0) {
+                econ.depositPlayer(player, difference);
+            } else if (difference < 0) {
+                econ.withdrawPlayer(player, -difference);
+            }
+        }
     }
 
     public void reloadConfig()
     {
         globalPlugin.reloadConfig();
         this.globalConfig = globalPlugin.getConfig();
+        checkPlayerJoinHistory();
     }
     public void setValue(String valuePath, Object value, boolean isPlayer, Player player)
     {
@@ -45,6 +88,22 @@ public class TradeMCConfig {
                 globalPlugin.saveConfig();
                 globalPlugin.getLogger().warning("TradeMC Config Path: " + valuePath + "; was set to the value: " + value);
                 globalPlugin.getLogger().warning("It is recommended to reload TradeMC with: `/trademc reload`");
+            }
+        }
+    }
+
+    public void checkPlayerJoinHistory()
+    {
+        List<String> playersJoined = globalConfig.getStringList("player-data.players-joined");
+
+        for (Player player : Bukkit.getOnlinePlayers())
+        {
+            if (!playersJoined.contains(player.getName()))
+            {
+                playersJoined.add(player.getName());
+                globalConfig.set("player-data.players-joined", playersJoined);
+                setPlayerBalance(player, globalConfig.getInt("economy.default-balance"));
+                globalPlugin.saveConfig();
             }
         }
     }

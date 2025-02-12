@@ -1,6 +1,7 @@
 settings:
   general:
-    currency_name: "Coins"
+    first-time-use: true
+    currency_name: "coins"
 
 trading:
   allow-cross-world: true
@@ -9,9 +10,10 @@ trading:
     - "minecraft:command_block"
 
 shops:
-  enable-shops: true
   shop-creation-cost: 100
 
 economy:
-  enable-economy: true
   default-balance: 250
+
+player-data:
+  players-joined: []
