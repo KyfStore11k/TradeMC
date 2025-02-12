@@ -14,19 +14,13 @@ version = "1.0.0-SNAPSHOT"
 repositories {
     mavenCentral()
 
-    maven {
-        name = "papermc-repo"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
-    }
-
-    maven {
-        name = "sonatype"
-        url = uri("https://oss.sonatype.org/content/groups/public/")
-    }
+    maven { name = "papermc-repo"; url = uri("https://repo.papermc.io/repository/maven-public/") }
+    maven { name = "sonatype"; url = uri("https://oss.sonatype.org/content/groups/public/") }
 
     maven("https://repo.xenondevs.xyz/releases")
     maven("https://libraries.minecraft.net") { }
     maven("https://jitpack.io") { }
+    maven("https://repo.codemc.org/repository/maven-public/") { }
 }
 
 dependencies {
@@ -39,14 +33,12 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7") {
         exclude(group = "org.bukkit", module = "bukkit")
     }
-    compileOnly("dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.7.0")
+    compileOnly("xyz.xenondevs.invui:invui:1.44")
     compileOnly("net.luckperms:api:5.4")
+
+    implementation("dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.7.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
-    implementation("xyz.xenondevs.invui:invui:1.44") // no invui-kotlin
-
     implementation(gradleApi())
-
     implementation("me.lucko:commodore:2.2")
 }
 
@@ -64,6 +56,8 @@ tasks {
     }
 
     shadowJar {
+        relocate("dev.jorel.commandapi", "com.kyfstore.tradeMC.commandapi")
+
         dependencies {
             exclude(dependency("com.mojang:brigadier"))
         }

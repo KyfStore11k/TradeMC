@@ -1,14 +1,24 @@
 package com.kyfstore.tradeMC
 
 import com.kyfstore.tradeMC.config.TradeMCConfig
-// import com.kyfstore.tradeMC.commands.OUTDATED.commandTemplates.*
-import com.kyfstore.tradeMC.commands.revamp.*
 import com.kyfstore.tradeMC.listeners.PlayerJoinListener
 import org.bukkit.plugin.java.JavaPlugin
+import xyz.xenondevs.invui.InvUI
 
 class TradeMC : JavaPlugin() {
 
-    // private lateinit var commodoreHandler: CommodoreHandler
+    override fun onLoad()
+    {
+        this.saveDefaultConfig();
+
+        // CommandAPI.onLoad(CommandAPIBukkitConfig(this).verboseOutput(true))
+
+        //CommandAPICommand("ping")
+        //    .executes(CommandExecutor { sender, _ ->
+        //        sender.sendMessage("pong!")
+        //    })
+        //    .register()
+    }
 
     override fun onEnable() {
         logger.info("Enabling TradeMC...")
@@ -20,15 +30,15 @@ class TradeMC : JavaPlugin() {
 
         logger.info("Registering Commands...")
 
-        // this.commodoreHandler = CommodoreHandler(this)
-        // TradeMCCommand(this)
-        // TMCSellCommand(this)
+        // CommandAPI.onEnable()
 
         logger.info("Successfully Enabled TradeMC Commands!")
 
         logger.info("Registering Listeners...")
 
         server.pluginManager.registerEvents(PlayerJoinListener(this), this)
+
+        InvUI.getInstance().setPlugin(this);
 
         logger.info("Successfully Enabled All Listeners")
 
@@ -45,10 +55,10 @@ class TradeMC : JavaPlugin() {
         }
     }
 
-    // fun commodoreHandler(): CommodoreHandler = commodoreHandler
-
     override fun onDisable() {
         logger.info("Disabling TradeMC...")
+
+        // CommandAPI.onDisable()
 
         logger.info("Successfully Disabled TradeMC!")
     }

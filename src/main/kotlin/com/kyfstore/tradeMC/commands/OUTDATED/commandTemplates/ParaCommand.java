@@ -14,7 +14,7 @@ public abstract class ParaCommand implements CommandExecutor, TabCompleter {
 
         command.setExecutor(this);
         command.setTabCompleter(this);
-        core.commodoreHandler().register(command, name);
+        // core.commodoreHandler().register(command, name);
     }
 
     public abstract void run(
