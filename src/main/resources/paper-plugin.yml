@@ -1,5 +1,6 @@
 name: TradeMC
 version: '1.0.0-SNAPSHOT'
+folia-supported: true
 main: com.kyfstore.tradeMC.TradeMC
 loader: com.kyfstore.tradeMC.TradeMCPluginLoader
 api-version: '1.21'

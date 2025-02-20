@@ -14,6 +14,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
+@SuppressWarnings("LongMethod")
 object Commands {
     fun register(plugin: JavaPlugin) {
         CommandAPICommand("trademc")
@@ -103,7 +104,7 @@ object Commands {
                         return@CommandExecutor
                     }
 
-
+                    @SuppressWarnings("LoopWithTooManyJumpStatements")
                     for (item in items) {
                         val count = item.amount
 
