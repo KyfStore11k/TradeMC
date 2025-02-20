@@ -19,6 +19,7 @@ object Commands {
         CommandAPICommand("trademc")
             .withSubcommand(
                 CommandAPICommand("help")
+                    .withPermission("trademc.help")
                     .executes(CommandExecutor { sender, _ ->
                         sender.sendMessage(miniMessage().deserialize("<green>=== TradeMC Help ==="))
                         sender.sendMessage(miniMessage().deserialize("<yellow>/trademc help <green>|<white> Shows this help screen"))
@@ -29,12 +30,14 @@ object Commands {
             )
             .withSubcommand(
                 CommandAPICommand("version")
+                    .withPermission("trademc.version")
                     .executes(CommandExecutor { sender, _ ->
                         sender.sendMessage(miniMessage().deserialize("<yellow>This server is running TradeMC <green>" + plugin.pluginMeta.version))
                     })
             )
             .withSubcommand(
                 CommandAPICommand("reload")
+                    .withPermission("trademc.admin.reload")
                     .executes(CommandExecutor { sender, _ ->
                         sender.sendMessage(miniMessage().deserialize("<yellow>Reloading TradeMC..."))
                         TradeMCConfig.tradeMCConfig.reloadConfig()
@@ -46,6 +49,7 @@ object Commands {
                     .withSubcommand(
                         CommandAPICommand("set")
                             .withArguments(StringArgument("valuePath"), StringArgument("value"))
+                            .withPermission("trademc.admin.config.set")
                             .executes(CommandExecutor {sender, args ->
                                 val valuePath: String = args.get("valuePath").toString()
                                 val value: String = args.get("value").toString()
@@ -57,6 +61,7 @@ object Commands {
                     )
                     .withSubcommand(
                         CommandAPICommand("show")
+                            .withPermission("trademc.admin.config.show")
                             .executes(CommandExecutor { sender, _ ->
                                 val list: List<String> = TradeMCConfig.tradeMCConfig.showValues() as List<String>
                                 sender.sendMessage(miniMessage().deserialize("<yellow>=== TradeMC config settings==="))
@@ -74,6 +79,7 @@ object Commands {
 
         CommandAPICommand("sell")
             .withArguments(ItemStackArgument("item"), LongArgument("count"), LongArgument("price"))
+            .withPermission("trademc.sell")
             .executes(CommandExecutor {sender, args ->
                 if (sender is Player) {
                     val items: ArrayList<ItemStack> = ArrayList()
