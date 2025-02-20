@@ -15,7 +15,6 @@ repositories {
     mavenCentral()
 
     maven { name = "papermc-repo"; url = uri("https://repo.papermc.io/repository/maven-public/") }
-    maven { name = "sonatype"; url = uri("https://oss.sonatype.org/content/groups/public/") }
 
     maven("https://repo.xenondevs.xyz/releases")
     maven("https://libraries.minecraft.net") { }
@@ -24,27 +23,24 @@ repositories {
 }
 
 dependencies {
-
-    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
-
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
-    compileOnly("com.mojang:brigadier:1.0.18")
-    compileOnly("org.jetbrains:annotations:26.0.2")
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7") {
         exclude(group = "org.bukkit", module = "bukkit")
     }
-    compileOnly("xyz.xenondevs.invui:invui:1.44")
+    compileOnly("xyz.xenondevs.invui:invui-kotlin:1.44")
     compileOnly("net.luckperms:api:5.4")
 
-    implementation("dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.7.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation(gradleApi())
-    implementation("me.lucko:commodore:2.2")
+    compileOnly("dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.7.0")
+    compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
 
 val targetJavaVersion = 21
 kotlin {
     jvmToolchain(targetJavaVersion)
+}
+
+detekt {
+    config.setFrom(file("config/detekt/detekt.yml"))
 }
 
 //paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
@@ -56,7 +52,7 @@ tasks {
     }
 
     shadowJar {
-        relocate("dev.jorel.commandapi", "com.kyfstore.tradeMC.commandapi")
+        //relocate("dev.jorel.commandapi", "com.kyfstore.tradeMC.commandapi")
 
         dependencies {
             exclude(dependency("com.mojang:brigadier"))
@@ -80,10 +76,6 @@ tasks {
         manifest {
             attributes["paperweight-mappings-namespace"] = "mojang"
         }
-    }
-
-    assemble {
-        dependsOn("reobfJar")
     }
 }
 

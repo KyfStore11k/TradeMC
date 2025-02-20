@@ -1,0 +1,8 @@
+name: TradeMC
+version: '1.0.0-SNAPSHOT'
+main: com.kyfstore.tradeMC.TradeMC
+loader: com.kyfstore.tradeMC.TradeMCPluginLoader
+api-version: '1.21'
+authors: [KyfStore]
+description: TradeMC is a Minecraft plugin that enables seamless player-to-player trading, server shops, and an integrated economy for buying, selling, and managing transactions.
+website: https://github.com/KyfStore11k/TradeMC

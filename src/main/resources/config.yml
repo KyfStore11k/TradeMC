@@ -1,7 +1,8 @@
 settings:
   general:
-    first-time-use: true
+    first-load: true
     currency_name: "coins"
+    verbose: false
 
 trading:
   allow-cross-world: true
@@ -11,9 +12,6 @@ trading:
 
 shops:
   shop-creation-cost: 100
-
-economy:
-  default-balance: 250
 
 player-data:
   players-joined: []
